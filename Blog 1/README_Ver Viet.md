@@ -99,7 +99,7 @@ Ví dụ:
  Ví dụ doanh số bán hàng tăng vọt vào các đợt sale có thể được xem là một intentional anomaly. Mặc dù nó khác với dữ liệu doanh số thông thường, nhưng sự tăng đột biến này là điều có thể dự đoán được vì nó gắn với một sự kiện thực tế và thường được chuẩn bị trước.
 
   <p align="center">
-   <img src="https://github.com/EvelynMyNguyen210/Warmup02_Blog1/blob/main/Collection/part2_healthcare.png/3_2_Intentional_anomalies.jpg" style="margin: 0 auto; display: block;"><br/>
+   <img src="https://github.com/EvelynMyNguyen210/Warmup02_Blog1/blob/main/Collection/3_2_Intentional_anomalies.jpg" style="margin: 0 auto; display: block;"><br/>
    <em>Hình 3.2. Doanh số tăng vọt trong đợt sale, một dạng bất thường có chủ đích trong dữ liệu. </em>
  </p>
 
