@@ -75,7 +75,7 @@ Trong lĩnh vực y tế, các dữ liệu về bệnh nhân rất quan trọng 
 
 Hệ thống phát hiện bất thường có thể phát hiện hai loại bất thường chính: bất thường không chủ đích và bất thường có chủ đích.
 
-### 1. Bất thường ngoài ý muốn (Unintentional anomalies)
+### 3.1.1. Bất thường ngoài ý muốn (Unintentional anomalies)
 
 Những bất thường không cố ý là các điểm dữ liệu lệch khỏi mức bình thường do lỗi hoặc nhiễu trong quá trình thu thập dữ liệu. Những lỗi này có thể là có hệ thống hoặc ngẫu nhiên, thường xuất phát từ các vấn đề như cảm biến bị lỗi hoặc sai sót của con người khi nhập dữ liệu. Các bất thường không cố ý này có thể làm méo mó bộ dữ liệu, khiến việc rút ra kết luận chính xác từ dữ liệu trở nên khó khăn hơn.
 
@@ -93,7 +93,7 @@ Ví dụ:
    <em>Hình 3.1. Bài hát đột nhiên lan truyền mạnh khiến lượt nhắc đến tăng vọt; nguồn:  <a href="https://www.talkwalker.com/blog/trend-analysis-life-of-a-showgirl">Talkwalker Social Listening</a> </em>
  </p>
 
-### 2. Bất thường có chủ đích (Intentional anomalies)
+### 3.1.2. Bất thường có chủ đích (Intentional anomalies)
  Bất thường có chủ đích là những điểm dữ liệu khác biệt do một sự kiện hoặc hành động cụ thể, thường mang ý nghĩa quan trọng. Những bất thường này đôi khi lại rất có giá trị, vì chúng có thể cho thấy những hiện tượng đặc biệt hoặc xu hướng đáng chú ý trong bộ dữ liệu.
 
  Ví dụ doanh số bán hàng tăng vọt vào các đợt sale có thể được xem là một intentional anomaly. Mặc dù nó khác với dữ liệu doanh số thông thường, nhưng sự tăng đột biến này là điều có thể dự đoán được vì nó gắn với một sự kiện thực tế và thường được chuẩn bị trước.
@@ -102,6 +102,67 @@ Ví dụ:
    <img src="https://github.com/EvelynMyNguyen210/Warmup02_Blog1/blob/main/Collection/part2_healthcare.png/3_2_Intentional_anomalies.png" style="margin: 0 auto; display: block;"><br/>
    <em>Hình 3.2. Doanh số tăng vọt trong đợt sale, một dạng bất thường có chủ đích trong dữ liệu. </em>
  </p>
+
+## 3.2 Phân loại theo Biểu hiện dữ liệu
+Một khía cạnh quan trọng của việc phát hiện bất thường là bản chất của bất thường cần phát hiện, có thể được phân loại thành ba loại sau:
+
+### 3.2.1. Point Anomalies – Bất thường tại một điểm dữ liệu
+Point anomaly xảy ra khi một điểm dữ liệu riêng lẻ khác biệt rõ rệt so với phần còn lại của tập dữ liệu. Nói đơn giản hơn, nếu chỉ cần nhìn vào một điểm dữ liệu mà chúng ta đã có thể nhận ra nó “không giống ai”, thì đó chính là point anomaly.
+
+Đây là loại bất thường đơn giản nhất, và cũng là chủ đề được nghiên cứu nhiều nhất trong lĩnh vực anomaly detection. Lý do là vì loại bất thường này khá trực quan: chúng ta chỉ cần so sánh một điểm dữ liệu với phần còn lại để xem nó có nằm ngoài “vùng bình thường” hay không.
+
+Trong hình minh họa dưới đây, các điểm như o1, o2 hoặc những điểm nằm trong vùng O3 thường được xem là bất thường vì chúng nằm ngoài ranh giới của vùng dữ liệu bình thường. Chính vì vậy, chúng được phân loại là point anomalies.
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Blog1/blob/main/Collection/3_3_Point_Anomalies.png style="margin: 0 auto; display: block;"><br/>
+  <em>Hình 3.3. Ví dụ đơn giản về các điểm bất thường trong tập dữ liệu hai chiều; nguồn: <a href="https://doi.org/10.1145/1541880.1541882">Chandola, Banerjee, and Kumar (2009) – Anomaly Detection: A Survey</a></em>
+</p>
+
+Một ví dụ quen thuộc của point anomaly là trong hệ thống phát hiện gian lận thẻ tín dụng. Giả sử một người thường chi tiêu mỗi lần khoảng 200.000 đến 1.000.000 VND. Nhưng bỗng nhiên xuất hiện một giao dịch 30.000.000 VND. So với lịch sử chi tiêu trước đó, giao dịch này lớn bất thường và có thể được hệ thống đánh dấu là point anomaly để kiểm tra thêm.
+
+### 3.2.2. Contextual Anomalies – Bất thường theo ngữ cảnh
+
+Một điểm dữ liệu được gọi là bất thường theo ngữ cảnh khi nó chỉ bất thường trong một bối cảnh cụ thể, nhưng không bất thường trong các bối cảnh khác. Loại bất thường này còn được gọi là bất thường có điều kiện (conditional anomaly) [Song et al., 2007].
+
+Khái niệm ngữ cảnh (context) được hình thành từ cấu trúc của tập dữ liệu, và cần được xác định ngay từ giai đoạn xây dựng bài toán. Mỗi điểm dữ liệu thường được mô tả bởi hai nhóm thuộc tính sau:
+
+**(1) Thuộc tính ngữ cảnh (Contextual attributes)**
+
+Thuộc tính ngữ cảnh được dùng để xác định bối cảnh hoặc vùng lân cận của một điểm dữ liệu.
+
+Ví dụ:
+
+- Trong dữ liệu không gian (spatial data), kinh độ và vĩ độ của một địa điểm chính là các thuộc tính ngữ cảnh.
+
+- Trong dữ liệu chuỗi thời gian (time-series), thời gian đóng vai trò là thuộc tính ngữ cảnh vì nó xác định vị trí của một quan sát trong toàn bộ chuỗi dữ liệu.
+
+**(2) Thuộc tính hành vi (Behavioral attributes)**
+
+Thuộc tính hành vi mô tả đặc trưng thực tế của điểm dữ liệu, độc lập với ngữ cảnh.
+
+Ví dụ:
+
+- Trong một tập dữ liệu không gian mô tả lượng mưa trung bình trên toàn thế giới, thì lượng mưa tại từng địa điểm chính là một thuộc tính hành vi.
+
+Việc xác định một điểm dữ liệu có bất thường hay không sẽ dựa trên giá trị của các thuộc tính hành vi trong một ngữ cảnh cụ thể. Một điểm dữ liệu có thể được xem là bất thường trong một ngữ cảnh, nhưng lại hoàn toàn bình thường trong một ngữ cảnh khác, ngay cả khi giá trị hành vi của nó giống hệt nhau. Đây chính là đặc điểm quan trọng giúp phân biệt thuộc tính ngữ cảnh và thuộc tính hành vi trong các phương pháp phát hiện bất thường theo ngữ cảnh.
+
+Hình sau cho thấy một ví dụ như vậy đối với chuỗi thời gian nhiệt độ thể hiện nhiệt độ hàng tháng của một khu vực trong vài năm qua. Nhiệt độ 35◦F có thể là bình thường trong mùa đông (tại thời điểm t1) ở nơi đó, nhưng cùng giá trị đó trong mùa hè (tại thời điểm t2) sẽ là bất thường.
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Blog1/blob/main/Collection/3_4_Contextual_Anomalies.png style="margin: 0 auto; display: block;"><br/>
+  <em>Hình 3.4. Ví dụ về bất thường theo ngữ cảnh trong chuỗi thời gian nhiệt độ; nguồn: <a href="https://doi.org/10.1145/1541880.1541882">Chandola, Banerjee, and Kumar (2009) – Anomaly Detection: A Survey</a></em>
+</p>
+
+### 3.2.3. Collective Anomalies - Bất thường tập thể
+
+Bất thường tập thể xảy ra khi một nhóm các điểm dữ liệu có liên quan với nhau được xem là bất thường so với toàn bộ tập dữ liệu. Trong trường hợp này, từng điểm dữ liệu riêng lẻ có thể không bất thường, nhưng sự xuất hiện của chúng cùng nhau dưới dạng một tập hợp lại tạo thành bất thường.
+
+Hình dưới đây minh họa một ví dụ về tín hiệu điện tâm đồ (ECG) của con người [Goldberger et al., 2000]. Vùng được đánh dấu được xem là bất thường vì giá trị thấp kéo dài trong một khoảng thời gian bất thường (tương ứng với hiện tượng Atrial Premature Contraction). Lưu ý rằng bản thân giá trị thấp đó không phải là bất thường, nhưng việc nó kéo dài trong một khoảng thời gian dài mới tạo ra bất thường.
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Blog1/blob/main/Collection/3_5_Collective_Anomalies.png style="margin: 0 auto; display: block;"><br/>
+  <em>Hình 3.5. Ví dụ về bất thường tập thể trong tín hiệu điện tâm đồ (ECG).; nguồn: <a href="https://doi.org/10.1145/1541880.1541882">Chandola, Banerjee, and Kumar (2009) – Anomaly Detection: A Survey</a></em>
+</p>
 
 # 5. Những hạn chế thực tế trong việc phát hiện bất thường (Anomaly Detection)
 Mặc dù anomaly detection là một kỹ thuật rất quan trọng trong data science, việc phát hiện các mẫu dữ liệu bất thường trong dữ liệu thực tế thường gặp nhiều khó khăn. Trong nhiều hệ thống, anomaly xảy ra rất hiếm, dữ liệu có thể thay đổi theo thời gian, và tập dữ liệu có thể chứa rất nhiều đặc trưng khác nhau. Những yếu tố này khiến các thuật toán khó phân biệt chính xác giữa hành vi bình thường và hành vi bất thường.
