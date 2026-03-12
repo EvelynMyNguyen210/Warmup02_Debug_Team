@@ -75,7 +75,7 @@ Trong lĩnh vực y tế, các dữ liệu về bệnh nhân rất quan trọng 
 
 Hệ thống phát hiện bất thường có thể phát hiện hai loại bất thường chính: bất thường không chủ đích và bất thường có chủ đích.
 
-### 3.1.1. Bất thường ngoài ý muốn (Unintentional anomalies)
+### 3.1.1. Bất thường không chủ đích (Unintentional anomalies)
 
 Những bất thường không cố ý là các điểm dữ liệu lệch khỏi mức bình thường do lỗi hoặc nhiễu trong quá trình thu thập dữ liệu. Những lỗi này có thể là có hệ thống hoặc ngẫu nhiên, thường xuất phát từ các vấn đề như cảm biến bị lỗi hoặc sai sót của con người khi nhập dữ liệu. Các bất thường không cố ý này có thể làm méo mó bộ dữ liệu, khiến việc rút ra kết luận chính xác từ dữ liệu trở nên khó khăn hơn.
 
@@ -99,7 +99,7 @@ Ví dụ:
  Ví dụ doanh số bán hàng tăng vọt vào các đợt sale có thể được xem là một intentional anomaly. Mặc dù nó khác với dữ liệu doanh số thông thường, nhưng sự tăng đột biến này là điều có thể dự đoán được vì nó gắn với một sự kiện thực tế và thường được chuẩn bị trước.
 
   <p align="center">
-   <img src="https://github.com/EvelynMyNguyen210/Warmup02_Blog1/blob/main/Collection/part2_healthcare.png/3_2_Intentional_anomalies.png" style="margin: 0 auto; display: block;"><br/>
+   <img src="https://github.com/EvelynMyNguyen210/Warmup02_Blog1/blob/main/Collection/part2_healthcare.png/3_2_Intentional_anomalies.jpg" style="margin: 0 auto; display: block;"><br/>
    <em>Hình 3.2. Doanh số tăng vọt trong đợt sale, một dạng bất thường có chủ đích trong dữ liệu. </em>
  </p>
 
