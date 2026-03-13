@@ -22,49 +22,42 @@ Hiện nay với sự phát triển không ngừng của xã hội, dữ liệu 
 ## 2.2. Những ứng dụng của Anomaly Detection
 ### 2.2.1. Phát hiện gian lận tài chính
 Trong lĩnh vực tài chính, việc phát hiện các điểm bất thường trong giao dịch có thể giúp doanh nghiệp phát hiện kịp thời các giao dịch mang tính gian lận, từ đó doanh nghiệp có thể bảo vệ khách hàng cũng như giảm thiểu rủi ro về tổn thất tài chính. Ứng dụng cụ thể có thể kể đến:
-**Transaction fraud:**
-* Hành vi cố tình sử dụng thông tin tài chính bị đánh cắp để thực hiện các giao dịch mua sắm, chuyển tiền trái phép. Thông qua việc phân tích các điểm bất thường trong dữ liệu giao dịch, ngân hàng có thể can thiệp kịp thời và ngăn chặn các giao dịch trái phép, khả nghi cho khách hàng.
+**Transaction fraud:** Hành vi cố tình sử dụng thông tin tài chính bị đánh cắp để thực hiện các giao dịch mua sắm, chuyển tiền trái phép. Thông qua việc phân tích các điểm bất thường trong dữ liệu giao dịch, ngân hàng có thể can thiệp kịp thời và ngăn chặn các giao dịch trái phép, khả nghi cho khách hàng.
 
-**Credit card fraud:**
-* Thông tin tín dụng cá nhân rất dễ bị đánh cắp, vì vậy anomaly detection có thể được ứng dụng để truy vết các giao dịch tín dụng từ IP lạ hay các giao dịch lớn bất thường so với thường lệ. Từ đó ngân hàng có thể ngăn chặn các giao dịch này, đảm bảo quyền lợi và thiệt hại tài chính của chủ thẻ.
+**Credit card fraud:** Thông tin tín dụng cá nhân rất dễ bị đánh cắp, vì vậy anomaly detection có thể được ứng dụng để truy vết các giao dịch tín dụng từ IP lạ hay các giao dịch lớn bất thường so với thường lệ. Từ đó ngân hàng có thể ngăn chặn các giao dịch này, đảm bảo quyền lợi và thiệt hại tài chính của chủ thẻ.
 
 ### 2.2.2. An ninh mạng
 Trong lĩnh vực an ninh mạng, việc phát hiện các truy cập khả nghi hay request bất thường có thể giúp tìm ra lỗ hổng bảo mật hiện có, từ đó có ngăn chặn kịp thời các cuộc tấn công mạng, nâng cao bảo mật của hệ thống mạng máy tính.
 
-**Network intrusion:** 
-* Thông qua giám sát lưu lượng truy cập mạng bất thường của một truy cập, hệ thống có thể đưa ra cảnh báo đến người quản trị, ngăn chặn việc xâm nhập mạng bất thường.
+**Network intrusion:** Thông qua giám sát lưu lượng truy cập mạng bất thường của một truy cập, hệ thống có thể đưa ra cảnh báo đến người quản trị, ngăn chặn việc xâm nhập mạng bất thường.
 
-**Abnormal login activity:**
-* Đề cập đến các truy cập không rõ nguồn gốc, không được cấp phép hay từ các thiết bị mới. Thông qua nhận diện các truy cập này, hệ thống có thể gửi cảnh báo để người dùng về một rủi ro về bảo mật tài khoản hiện tại.
+**Abnormal login activity:** Đề cập đến các truy cập không rõ nguồn gốc, không được cấp phép hay từ các thiết bị mới. Thông qua nhận diện các truy cập này, hệ thống có thể gửi cảnh báo để người dùng về một rủi ro về bảo mật tài khoản hiện tại.
 
 <p align="center">
   <img src=https://github.com/EvelynMyNguyen210/Warmup02_Blog1/blob/main/Collection/part2_cybersecurity.png style="margin: 0 auto; display: block;"><br/>
-  <em>Hình 2.1. Anomalies trong an ninh mạng (Nguồn: https://www.wiz.io/academy/detection-and-response/anomaly-detection)</em>
+  <em>Hình 2.1. Anomaly trong an ninh mạng; nguồn: <a href="https://www.wiz.io/academy/detection-and-response/anomaly-detection">Wiz</a></em>
 </p>
 
 ### 2.2.3. Industrial monitoring:
 Trong hệ thống máy công nghiệp, các thiết bị có thể đọc ghi các kết quả sai theo thời gian. Việc phát hiện sớm các sai sót về dữ liệu như sensor có thể giúp doanh nghiệp tìm nguyên nhân và sửa chữa kịp thời, đảm bảo tính ổn định của hệ thống.
 
-**Lỗi máy móc** 
-* Một hư hỏng về bộ phận bất kì trong máy sản xuất cũng có thể ảnh hưởng đến các thiết bị khác. Ví dụ như hệ thống laser của một máy cắt laser khi bị lỗi có thể cấp nhiệt quá mức cho phép, từ đó gây ra sai số dữ liệu cho sensor nhiệt. Việc phát hiện bất thường trong dữ liệu đọc ghi từ các thiết bị này có thể giúp doanh nghiệp truy vết được các vấn đề khác, từ đó bảo trì máy được tốt hơn.
+**Lỗi máy móc**  Một hư hỏng về bộ phận bất kì trong máy sản xuất cũng có thể ảnh hưởng đến các thiết bị khác. Ví dụ như hệ thống laser của một máy cắt laser khi bị lỗi có thể cấp nhiệt quá mức cho phép, từ đó gây ra sai số dữ liệu cho sensor nhiệt. Việc phát hiện bất thường trong dữ liệu đọc ghi từ các thiết bị này có thể giúp doanh nghiệp truy vết được các vấn đề khác, từ đó bảo trì máy được tốt hơn.
 
-**Sai số điều khiển:**
-* Trong lĩnh vực điều khiển, các dữ liệu về motor có thể phản ánh tính chính xác của bộ điều khiển, việc phân tích các dữ liệu có thể giúp tìm ra hạn chế về thiết kế hiện tại và tối ưu hệ thống.
+**Sai số điều khiển:** Trong lĩnh vực điều khiển, các dữ liệu về motor có thể phản ánh tính chính xác của bộ điều khiển, việc phân tích các dữ liệu có thể giúp tìm ra hạn chế về thiết kế hiện tại và tối ưu hệ thống.
 
 <p align="center">
   <img src=https://github.com/EvelynMyNguyen210/Warmup02_Blog1/blob/main/Collection/part2_industrial.png style="margin: 0 auto; display: block;"><br/>
-  <em>Hình 2.2. Anomaly trong dữ liệu sensor (Nguồn: https://www.themoonlight.io/de/review/an-attention-based-deep-generative-model-for-anomaly-detection-in-industrial-control-systems)</em>
+  <em>Hình 2.2. Anomaly trong dữ liệu sensor; nguồn <a href="https://www.themoonlight.io/de/review/an-attention-based-deep-generative-model-for-anomaly-detection-in-industrial-control-systems">TheMoonlight</a></em>
 </p>
 
 ### 2.2.4. Healthcare:
 Trong lĩnh vực y tế, các dữ liệu về bệnh nhân rất quan trọng cho việc theo dõi sức khỏe bệnh nhân. Thông qua các dữ liệu này, bác sĩ có thể theo dõi các chuyển biến về sức khỏe và cung cấp các giải pháp y tế kịp thời.
 
-**Dữ liệu y tế:**
-* Các dữ liệu như mỡ máu, huyết áp bất thường giúp bác sĩ tầm soát các bệnh lí có thể xảy ra ở bệnh nhân, qua đó hỗ trợ chuẩn đoán bệnh và phòng ngừa.
+**Dữ liệu y tế:** Các dữ liệu như mỡ máu, huyết áp bất thường giúp bác sĩ tầm soát các bệnh lí có thể xảy ra ở bệnh nhân, qua đó hỗ trợ chuẩn đoán bệnh và phòng ngừa.
 
 <p align="center">
   <img src=https://github.com/EvelynMyNguyen210/Warmup02_Blog1/blob/main/Collection/part2_healthcare.png style="margin: 0 auto; display: block;"><br/>
-  <em>Hình 2.3. Anomaly trong dữ liệu y tế (Nguồn: https://unit8.com/resources/anomaly-detection-in-healthcare-data-with-darts/) </em>
+  <em>Hình 2.3. Anomaly trong dữ liệu y tế; nguồn: <a href="https://unit8.com/resources/anomaly-detection-in-healthcare-data-with-darts/">Unit8</a></em>
 </p>
 
 # 3. Phân loại Anomaly
