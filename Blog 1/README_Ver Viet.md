@@ -319,7 +319,7 @@ Fraudulent transactions: 0,1%
 
 Sự mất cân bằng này có thể khiến các mô hình machine learning truyền thống tập trung quá nhiều vào lớp dữ liệu chiếm đa số (dữ liệu bình thường). Kết quả là mô hình có thể **đạt độ chính xác rất cao** nhưng lại **không phát hiện được anomaly.**
 
-Ví dụ, nếu một mô hình dự đoán tất cả giao dịch đều là normal, nó vẫn có thể đạt độ chính xác 99.9% trong ví dụ trên, mặc dù hoàn toàn không phát hiện được bất kỳ giao dịch gian lận nào.
+Ví dụ, nếu một mô hình dự đoán tất cả giao dịch đều là normal, nó vẫn có thể đạt độ chính xác 99,9% trong ví dụ trên, mặc dù hoàn toàn không phát hiện được bất kỳ giao dịch gian lận nào.
 
 Để giải quyết vấn đề này, các nhà khoa học dữ liệu thường áp dụng những kỹ thuật như **sampling methods** (ví dụ: oversampling dữ liệu hiếm) hoặc sử dụng các thuật toán chuyên biệt cho anomaly detection nhằm cải thiện khả năng phát hiện các sự kiện hiếm.
 
