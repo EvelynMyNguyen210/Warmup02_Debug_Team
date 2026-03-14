@@ -48,7 +48,7 @@ In the healthcare sector, patient data plays a crucial role in monitoring health
   <em>Figure 2.3. Anomaly in medical data; source: <a href="https://unit8.com/resources/anomaly-detection-in-healthcare-data-with-darts/">Unit8</a></em>
 </p>
 
-# 4. Common methods for detecting abnormalities
+# 4. Common methods for Anomaly Detection
 
 The rapid increase in data from various sources has made anomaly detection increasingly essential for identifying unusual observations that may signal system errors, security breaches, or fraud. Currently, there are many anomaly detection methods, ranging from simple to complex, and from traditional to modern. Each method has its own advantages and disadvantages. Depending on the type of data and the purpose, businesses and organizations will choose the most suitable method.
 
@@ -149,7 +149,7 @@ Figure 4.1. Reconstruction-based Approach.
 
 This approach works by training a model to learn the distribution of normal (non-anomalous) data. After training, the model is able to reconstruct the input data. The difference between the original data and the reconstructed data is called the reconstruction error. A high error is an indicator that the data is anomalous.
 
-In recent years, common approaches to modeling have included generative antagonist models (GANs), autoencoder models, and diffusion models.
+In recent years, common approaches to modeling have included generative adversarial networks (GANs), autoencoder models, and diffusion models.
 
 ### **4.4.2. Prediction-Based Approach**
 
@@ -158,11 +158,11 @@ In recent years, common approaches to modeling have included generative antagoni
 Figure 4.2. Prediction-Based Approach.
 </p>
 
-Predictive anomaly detection methods work by forecasting future values ​​or estimating missing attributes, then comparing these predictions to the actual observed values. When significant deviations occur, it indicates anomalies, as the data deviates from learned standard patterns.
+Prediction-based anomaly detection methods work by forecasting future values ​​or estimating missing attributes, then comparing these predictions to the actual observed values. When significant deviations occur, it indicates anomalies, as the data deviates from learned standard patterns.
 
 These methods are highly flexible and can be applied to a wide variety of data types, leveraging relationships between variables or correlations over time to detect anomalies. By learning structures within the data, whether based on time dependence or more general interactions between variables, these methods can effectively predict expected outcomes. This makes prediction-based methods highly adaptable, capable of working in diverse contexts, encompassing a wide range of data types.
 
-In this section, we will explore three main methods for predictive anomaly detection: Recurrent Neural Networks (RNNs), Attention mechanisms, and Graph Neural Networks (GNNs).
+In this section, we will explore three main methods for prediction-based anomaly detection: Recurrent Neural Networks (RNNs), Attention mechanisms, and Graph Neural Networks (GNNs).
 
 ### **4.4.3. Hybrid Approach**
 

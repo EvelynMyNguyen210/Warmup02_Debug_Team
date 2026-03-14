@@ -258,7 +258,7 @@ Sau đây là ba cách tiếp cận mô hình học sâu.
 
 Cách tiếp cận này thực hành bằng cách huấn luyện một mô hình có khả năng học được phân phối của dữ liệu bình thường (không có bất thường). Sau khi huấn luyện, mô hình có khả năng tái tạo lại dữ liệu đầu vào. Sự khác biệt giữa dữ liệu gốc và dữ liệu được tái tạo được gọi là sai số tái tạo (reconstruction error). Sai số cao là một dấu hiệu để nhận biết dữ liệu là bất thường.
 
-Trong những năm gần đây, các mô hình tiếp cận theo kiểu ngày thường là các mô hình đối kháng tạo sinh (GAN), mã hoá tự động (Autoencoder) và khuếch tán (Diffusion).
+Trong những năm gần đây, các mô hình tiếp cận theo kiểu ngày thường là các mô hình đối nghịch tạo sinh (GAN), mã hoá tự động (Autoencoder) và khuếch tán (Diffusion).
 
 ### **4.4.2. Cách tiếp cận dựa trên khả năng dự đoán của mô hình (Prediction-based Approach)**
 
