@@ -1,3 +1,24 @@
+# 1. Introduction
+
+In the digital age, the explosion of mobile banking, e-commerce, and online payment methods has brought unprecedented convenience to users. However, the downside of this development is the rapid increase in financial fraud with increasingly sophisticated and complex methods. From credit card information theft and phishing attacks to account takeovers, cybercrime poses a serious challenge to the entire global financial system.
+
+According to the latest data released by the Federal Trade Commission (FTC) in March 2025, consumers suffered record losses of up to $12.5 billion in 2024, a staggering 25% increase in just one year. Even more alarming, the percentage of scams resulting in actual financial losses increased from 27% to 38%, demonstrating that cybercrime is not only growing in scale but also optimizing its effectiveness through techniques such as phishing and account hijacking. Even more concerning, these attacks often occur in a split second &ndash; measured in milliseconds &ndash; rendering traditional manual verification methods completely ineffective.
+
+Against this backdrop, the application of Machine Learning has become a key "weapon", helping banks identify and prevent unauthorized access even before transactions are completed, maximizing the security of customers' assets.
+
+# 2. What is fraud detection in banking?
+
+In the banking sector, fraud detection is understood as a system of processes and technologies aimed at identifying, analyzing, and preventing unusual or suspicious transactions. The core objective of this process is to protect customer assets and minimize financial losses and damage to the bank's reputation.
+
+Nowadays, forms of fraud are becoming increasingly sophisticated, including common types such as:
+
+- **Credit card fraud:** Unauthorized use of credit card information to make payments or withdraw money.
+- **Identity theft:** Stealing personal information (ID card number, phone number) to open accounts or obtain fraudulent loans.
+- **Account takeover (ATO):** Fraudsters gain control of a customer's online banking account through malware or phishing.
+- **Money laundering:** Complex transactions designed to legitimize illicit funds.
+- **Phishing & Social Engineering:** Scams involving text messages and calls impersonating bank employees to trick users into providing OTP codes or passwords.
+- **APP Fraud (Authorized Push Payment):** Scammers trick victims into voluntarily transferring money to a fake account (often seen in lottery scams or financial investment scams).
+
 # 3. Why Traditional Fraud Detection Methods Are No Longer Effective
 
 Before machine learning became widely adopted, most banks relied on **rule-based systems** to detect suspicious transactions. These systems operate by applying a predefined set of rules created by analysts.

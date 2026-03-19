@@ -1,12 +1,12 @@
-## **1. Giới thiệu**
+# **1. Giới thiệu**
 
 Trong kỉ nguyên số hóa, sự bùng nổ của mobile banking, thương mại điện tử và các hình thức thanh toán trực tuyến đã mang lại sự tiện lợi chưa từng có cho người dùng. Tuy nhiên, mặt trái của sự phát triển này là sự gia tăng chóng mặt của các hình thức gian lận tài chính với thủ đoạn ngày càng tinh vi và phức tạp. Từ những vụ đánh cắp thông tin thẻ tín dụng, tấn công giả mạo (phishing), cho đến chiếm đoạt quyền kiểm soát tài khoản (account takeover), tội phạm mạng đang đặt ra thách thức nghiêm trọng cho toàn bộ hệ thống tài chính toàn cầu.
 
-Theo dữ liệu mới nhất được Federal Trade Commission (FTC) công bố vào tháng 3/2025, người tiêu dùng đã chịu mức thiệt hại kỷ lục lên tới 12,5 tỷ USD trong năm 2024, tăng trưởng nóng 25% chỉ sau một năm. Đáng báo động hơn, tỷ lệ các vụ lừa đảo dẫn đến mất mát tài sản thực tế đã tăng từ 27% lên 38%, cho thấy tội phạm mạng không chỉ gia tăng về quy mô mà còn tối ưu hóa hiệu quả tấn công thông qua các kỹ thuật như phishing hay chiếm quyền tài khoản. Đáng ngại hơn, các cuộc tấn công này thường diễn ra trong tích tắc &ndash; tính bằng mili giây &ndash; khiến các phương thức kiểm tra thủ công truyền thống hoàn toàn bất lực trong việc ngăn chặn.
+Theo dữ liệu mới nhất được Federal Trade Commission (FTC) công bố vào tháng 3/2025, người tiêu dùng đã chịu mức thiệt hại kỉ lục lên tới 12,5 tỷ USD trong năm 2024, tăng trưởng nóng 25% chỉ sau một năm. Đáng báo động hơn, tỉ lệ các vụ lừa đảo dẫn đến mất mát tài sản thực tế đã tăng từ 27% lên 38%, cho thấy tội phạm mạng không chỉ gia tăng về quy mô mà còn tối ưu hóa hiệu quả tấn công thông qua các kĩ thuật như phishing hay chiếm quyền tài khoản. Đáng ngại hơn, các cuộc tấn công này thường diễn ra trong tích tắc &ndash; tính bằng mili giây &ndash; khiến các phương thức kiểm tra thủ công truyền thống hoàn toàn bất lực trong việc ngăn chặn.
 
 Trước bối cảnh đó, việc ứng dụng Học máy (Machine Learning) đã trở thành "vũ khí" then chốt, giúp các ngân hàng nhận diện và ngăn chặn hành vi xâm nhập trái phép ngay từ khi giao dịch chưa kịp hoàn tất, bảo vệ an toàn tối đa cho tài sản của khách hàng.
 
-## **2. Phát hiện gian lận trong ngân hàng là gì?**
+# **2. Phát hiện gian lận trong ngân hàng là gì?**
 
 Trong lĩnh vực ngân hàng, Phát hiện gian lận (Fraud detection) được hiểu là một hệ thống các quy trình và công nghệ nhằm nhận diện, phân tích và ngăn chặn các giao dịch bất thường hoặc có dấu hiệu nghi vấn. Mục tiêu cốt lõi của quá trình này là bảo vệ tài sản của khách hàng và hạn chế tối đa tổn thất tài chính cũng như uy tín cho ngân hàng.
 
