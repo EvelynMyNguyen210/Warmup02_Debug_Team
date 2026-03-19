@@ -61,3 +61,108 @@ To better illustrate the differences between rule-based systems and machine lear
  </p></em>
  </p>
 
+# 4. Machine Learning Techniques
+## 4.1. Machine Learning Algorithm
+### **Supervised Learning:**
+
+Supervised Learning is a method in Machine Learning where the model is trained using labeled datasets. The algorithm learns to recognize patterns and relationships between input and output data, enabling it to accurately predict outcomes when encountering new real-world data.
+
+In the banking domain, input data can be transaction data (date, time, transaction location), while the output data is labeled and divided into two main categories: normal transactions and abnormal transactions. After training, the model can predict which transactions are fraudulent and which are legitimate.
+
+Some common supervised learning algorithms include:
+
+- **Random Forest:**
+
+Random Forest is a supervised machine learning algorithm commonly used for classification and regression problems. It consists of multiple decision trees. Each tree acts as an independent predictive model and produces its own prediction. For classification tasks, Random Forest aggregates the predictions of all trees and selects the most frequent result (majority vote). For regression tasks, the final result is the average of predictions from all trees.
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Debug_Team/blob/main/Collection_Blog2/part4_random_forest.png style="margin: 0 auto; display: block;"><br/>
+  <em>Figure 4.1. Random Forest algorithm; source: <a href="https://aicandy.vn/thuat-toan-random-forest-giai-thich-chi-tiet-va-ung-dung/">AICandy</a></em>
+</p>
+
+- **Gradient Boosting:**
+
+Gradient Boosting is a machine learning technique that combines multiple weak prediction models into a strong ensemble system. These models are typically decision trees, trained sequentially to minimize errors and improve accuracy. By combining multiple regression trees or classification trees, Gradient Boosting effectively captures complex relationships between features.
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Debug_Team/blob/main/Collection_Blog2/part4_Gradient%20boosting.png style="margin: 0 auto; display: block;"><br/>
+  <em>Figure 4.2. Gradient Boosting algorithm; source: <a href="https://vinbigdata.com/kham-pha/gradient-boosting-tim-hieu-ve-thuat-toan-tang-cuong-trong-may-hoc.html">VinBigData</a></em>
+</p>
+
+**Application:** *Detecting anomalous transaction behavior*
+
+The banking sector stores large volumes of transaction data. With this rich data resource, it is feasible to build models for predicting anomalous transactions. The labels in this domain are typically binary (normal vs. abnormal), making them well-suited for classification models. Additionally, due to the high-dimensional nature of the dataset, algorithms such as Random Forest and Gradient Boosting perform effectively.
+
+### **Unsupervised Learning:** 
+
+Unlike Supervised Learning, Unsupervised Learning works with unlabeled data, where the model automatically discovers patterns and structures within the dataset. Instead of relying on predefined labels, the algorithm analyzes and groups data points based on similarities and differences in the input data. Some common unsupervised learning algorithms include:
+
+- **Clustering:**
+
+Clustering algorithms group unlabeled data into clusters based on shared characteristics and features. Data points in different clusters exhibit clear differences. This method helps uncover hidden structures within the dataset.
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Debug_Team/blob/main/Collection_Blog2/part4_clustering.png style="margin: 0 auto; display: block;"><br/>
+  <em>Figure 4.3. Clustering algorithm; source: <a href="https://bolisettigunasekhar.medium.com/what-is-clustering-7c8c9c34bd66">Medium</a></em>
+</p>
+
+- **Isolation forest:**
+
+This algorithm is based on decision trees. In Isolation Forest, anomalies or outliers are gradually isolated through tree branches. Data points that require many conditions (more splits) to be isolated are likely normal points. In contrast, data points that require fewer conditions (fewer splits) are more likely to be anomalies, as they can be easily distinguished from the rest of the data.
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Debug_Team/blob/main/Collection_Blog2/part4_isolation_forest.png style="margin: 0 auto; display: block;"><br/>
+  <em>Figure 4.4. Isolation Forest algorithm; source: <a href="https://pyimagesearch.com/2024/10/21/predictive-maintenance-using-isolation-forest/">PyImageSearch</a></em>
+</p>
+
+**Application:** *Detecting anomalous transaction behavior*
+
+In practice, anomalous transaction data is difficult to label due to its randomness and constantly changing nature. Combined with the large volume of transaction data, labeling requires significant time and may introduce labeling errors. Therefore, clustering algorithms can be more effective in grouping and detecting anomalies within transaction datasets.
+
+
+## 4.2. Machine Learning Pipeline
+
+The basic process for building an anomalous transaction detection model includes:
+
+### **Step 1: Data collection**
+
+This step gathers banking data from multiple sources, such as:
+
+- Transaction history: time, location, transaction amount
+- User information: age
+- Device data: IP address used during transactions
+
+### **Step 2: Data processing**
+
+Transaction datasets are often large and complex, so preprocessing is necessary before model building:
+
+- Filtering input data
+- Handling missing values
+- Data normalization
+
+### **Step 3: Feature engineering**
+
+In addition to data preprocessing, feature engineering plays a crucial role in building an effective model. At this stage, features are extracted and selected from the dataset to determine which ones are most relevant for training. Proper feature preparation directly impacts model performance. Example features include:
+
+- Number of transactions within one hour
+- Distance between two transaction locations
+- Average transaction value
+
+### **Step 4: Model training**
+
+At this stage, an appropriate model is selected for training. For anomaly detection in transactions, if the data is labeled (normal vs. suspicious), supervised learning algorithms can be used, if labeling is not feasible or difficult, unsupervised learning algorithms may be more suitable.
+
+Common algorithms for this problem include:
+
+- Logistic Regression
+- Random Forest
+- Gradient Boosting
+- Neural Networks
+
+### **Step 5: Real-time detection**
+
+After training, the model is deployed for real-time operation when new data arrives:
+
+1. Data is fed into the model
+2. The model computes the fraud probability (likelihood that the transaction is normal or suspicious)
+3. If the output exceeds a predefined threshold, the system may trigger an alert or block the transaction
