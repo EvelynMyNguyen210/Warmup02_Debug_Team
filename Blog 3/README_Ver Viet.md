@@ -13,13 +13,13 @@ Ví dụ, một vài dòng dữ liệu đầu tiên có thể được biểu di
 
 Dưới đây là một số dòng dữ liệu tiêu biểu được trích từ dataset PaySim nhằm minh hoạ cấu trúc của một giao dịch:
 
-| step | type     | amount  | nameOrig     | oldbalanceOrg | newbalanceOrig | nameDest     | oldbalanceDest | newbalanceDest | isFraud |
-|------|----------|---------|--------------|----------------|----------------|--------------|----------------|----------------|--------|
-| 1    | PAYMENT  | 9839.64 | C1231006815  | 170136.0       | 160296.36      | M1979787155  | 0.0            | 0.0            | 0      |
-| 1    | PAYMENT  | 1864.28 | C1666544295  | 21249.0        | 19384.72       | M2044282225  | 0.0            | 0.0            | 0      |
-| 1    | TRANSFER | 181.00  | C1305486145  | 181.0          | 0.0            | C553264065   | 0.0            | 0.0            | 1      |
-| 1    | CASH_OUT | 181.00  | C840083671   | 181.0          | 0.0            | C38997010    | 21182.0        | 0.0            | 1      |
-| 1    | PAYMENT  | 11668.14| C2048537720  | 41554.0        | 29885.86       | M1230701703  | 0.0            | 0.0            | 0      |
+| step | type     | amount   | nameOrig     | oldbalanceOrg | newbalanceOrig | nameDest     | oldbalanceDest | newbalanceDest | isFraud | isFlaggedFraud |
+|------|----------|----------|--------------|----------------|----------------|--------------|----------------|----------------|--------|----------------|
+| 1    | PAYMENT  | 9839.64  | C1231006815  | 170136.0       | 160296.36      | M1979787155  | 0.0            | 0.0            | 0      | 0              |
+| 1    | PAYMENT  | 1864.28  | C1666544295  | 21249.0        | 19384.72       | M2044282225  | 0.0            | 0.0            | 0      | 0              |
+| 1    | TRANSFER | 181.00   | C1305486145  | 181.0          | 0.0            | C553264065   | 0.0            | 0.0            | 1      | 0              |
+| 1    | CASH_OUT | 181.00   | C840083671   | 181.0          | 0.0            | C38997010    | 21182.0        | 0.0            | 1      | 0              |
+| 1    | PAYMENT  | 11668.14 | C2048537720  | 41554.0        | 29885.86       | M1230701703  | 0.0            | 0.0            | 0      | 0              |
 
 **Nhận xét nhanh:**  
 - Các giao dịch gian lận (`isFraud = 1`) thường xuất hiện trong các loại như `TRANSFER` hoặc `CASH_OUT`.  
