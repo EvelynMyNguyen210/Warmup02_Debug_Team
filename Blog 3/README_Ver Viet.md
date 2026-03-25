@@ -2,24 +2,21 @@
 
 ## 1.1. Tính cấp thiết của đề tài
 
-Trong kỉ nguyên kinh tế số, các giao dịch tài chính trực tuyến đã trở thành một phần thiết yếu của đời sống xã hội. Tuy nhiên, sự tiện lợi này cũng đi kèm với rủi ro ngày càng tăng từ các hành vi gian lận tài chính (fraud transactions).
-
-Mỗi năm, các tổ chức ngân hàng và người dùng chịu thiệt hại hàng tỉ USD do các lỗ hổng bảo mật. Gian lận không chỉ gây mất mát về tiền bạc mà còn trực tiếp phá hủy niềm tin của khách hàng vào hệ thống thanh toán. Việc phát hiện sớm các kịch bản tấn công mới giúp củng cố bức tường bảo mật trước các thủ đoạn gian lận ngày càng tinh vi.
-
-Vì lẽ đó, mọi ngân hàng cần phải phát triển một quy trình nhận biết được các giao dịch trái phép này càng sớm càng tốt. Quy trình này gọi là phát hiện giao dịch gian lận, tức quá trình giám sát và phân tích các luồng giao dịch nhằm nhận diện các hành vi bất thường, giả mạo hoặc trái phép ngay trong thời gian thực.
+Trong bài toán phát hiện giao dịch gian lận (Fraud Transaction Detection), thách thức lớn nhất không chỉ nằm ở thuật toán mà còn ở bản chất của dữ liệu &ndash; sự mất cân bằng cực độ giữa giao dịch thực và gian lận, cùng các hành vi tinh vi được che giấu dưới nhiều hình thức thanh toán khác nhau. Các mô hình học máy (như Random Forest hay XGBoost) chỉ có thể đạt được hiệu suất tối ưu khi dữ liệu đầu vào được làm sạch và phản ánh đúng bản chất của hành vi gian lận. Vì thế, feature engineering, hay là quá trình biến đổi dữ liệu thô thành các đặc trưng có ý nghĩa, giúp mô hình hiểu được các quy luật bất thường và cải thiện đáng kể hiệu suất của mô hình.
 
 ## 1.2. Mục tiêu đề tài
 
-Dự án này tập trung vào việc xây dựng một hệ thống phân loại thông minh dựa trên dữ liệu lịch sử, hướng tới hai mục tiêu cốt lõi:
+Thay vì tập trung vào việc tinh chỉnh tham số mô hình, dự án này tập trung vào việc tối ưu hóa chất lượng dữ liệu đầu vào. Mục tiêu cụ thể bao gồm:
 
-- **Tối ưu khả năng nhận diện:** Sử dụng sức mạnh của học máy để phát hiện chính xác các giao dịch gian lận vốn thường bị ẩn lấp trong hàng triệu giao dịch thông thường.
-- **Kiểm soát tỷ lệ False Positive:** Việc chặn nhầm một giao dịch hợp lệ của khách hàng gây ra trải nghiệm rất tồi tệ. Dự án ưu tiên tinh chỉnh mô hình để giảm thiểu sai sót này, đảm bảo sự cân bằng giữa tính bảo mật và sự tiện dụng.
+**EDA (Phân tích dữ liệu khám phá).** Khám phá các mối liên hệ ẩn giữa các biến số để tìm ra dấu vết của hành vi gian lận trên tập dữ liệu.
 
-## 1.3. Phạm vi nghiên cứu
+**Feature Engineering (Kỹ thuật tạo đặc trưng).** Xây dựng các biến mới từ dữ liệu thô nhằm tăng cường khả năng phân loại cho thuật toán.
 
-Dự án được thực hiện trên tập dữ liệu [PaySim](https://www.kaggle.com/datasets/ealaxi/paysim1?fbclid=IwY2xjawQt4IpleHRuA2FlbQIxMABicmlkETFRQTVMTUtUMEwzR2JFcWZKc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHt2IJf88BNasTaUnRoEMgKLebwUkbTMWUHinH0pQVV7yfgX2wPPrvsJxk9iN_aem_mbURNxMBhP1k6Iphu4y0XA) &ndash; một bộ dữ liệu mô phỏng các giao dịch tài chính di động (mobile money) cực kỳ sát với thực tế. Dữ liệu bao gồm hơn 6 triệu dòng giao dịch với các loại hình như CASH-IN, CASH-OUT, DEBIT, PAYMENT và TRANSFER.
+**Đánh giá độ hiệu quả.** Thực hiện so sánh đối chứng (A/B testing) trên mô hình để chứng minh tầm quan trọng của việc xử lý dữ liệu. Cụ thể trong dự án này, nhóm sẽ so sánh hiệu suất của mô hình khi huấn luyện trên dữ liệu thô so với dữ liệu đã qua xử lý và trích xuất đặc trưng.
 
-Ngoài ra, dự án tập trung áp dụng và so sánh hiệu năng của hai thuật toán Ensemble Learning mạnh mẽ là Random Forest và XGBoost để xử lý bài toán phân loại nhị phân trên dữ liệu mất cân bằng (imbalanced data).
+## 1.3. Phạm vi đề tài
+
+Dự án sử dụng tập dữ liệu mô phỏng [PaySim](https://www.kaggle.com/datasets/ealaxi/paysim1?fbclid=IwY2xjawQt4IpleHRuA2FlbQIxMABicmlkETFRQTVMTUtUMEwzR2JFcWZKc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHt2IJf88BNasTaUnRoEMgKLebwUkbTMWUHinH0pQVV7yfgX2wPPrvsJxk9iN_aem_mbURNxMBhP1k6Iphu4y0XA), tập trung vào các công đoạn như làm sạch dữ liệu, EDA, feature engineering, sau đó sử dụng các thuật toán mạnh mẽ như Random Forest và XGBoost làm công cụ đo lường để kiểm chứng.
 
 # 2. Mô tả tập dữ liệu
 ## 2.1. Cấu trúc dữ liệu
@@ -596,23 +593,37 @@ Nếu chúng ta tiếp tục huấn luyện lên 200 vòng, bạn sẽ thấy đ
 
 # 7. Những mặt hạn chế và hướng phát triển
 
-Mặc dù các mô hình Random Forest và XGBoost đã chứng minh được hiệu quả trong việc phân loại giao dịch, dự án vẫn tồn tại những thách thức kỹ thuật cần được giải quyết để có thể triển khai trong môi trường thực tế.
+Dù việc tập trung vào xử lý dữ liệu và xây dựng đặc trưng đã cải thiện đáng kể hiệu suất mô hình, dự án vẫn vấp phải những rào cản kỹ thuật nhất định cần được tối ưu hóa trong tương lai.
 
 ## 7.1. Những mặt hạn chế
 
-**Mất cân bằng dữ liệu.** Tỉ lệ các giao dịch gian lận trong tập dữ liệu PaySim chiếm một phần rất nhỏ so với giao dịch hợp lệ. Sự chênh lệch cực lớn này có thể khiến mô hình bị "thiên kiến" (bias) về phía lớp đa số, dẫn đến việc bỏ sót các hành vi gian lận tinh vi nếu không có các kỹ thuật xử lý chuyên sâu như SMOTE hay Cost-sensitive learning.
+**Dữ liệu mô phỏng (Synthetic Data Bias).** Mặc dù PaySim là một bộ dữ liệu mô phỏng chất lượng cao, nó vẫn dựa trên các quy tắc (rules) cố định. Trong thực tế, hành vi gian lận của con người linh hoạt và khó đoán hơn các thuật toán sinh dữ liệu tự động, dẫn đến việc các đặc trưng (features) được tạo ra có thể chưa bao quát hết mọi kịch bản thực tế.
 
-**Concept Drift (Sự thay đổi về quy luật gian lận).** Các mô hình học máy được huấn luyện trên dữ liệu tĩnh, trong khi các phương thức gian lận luôn thay đổi theo thời gian để vượt qua các hệ thống phòng thủ. Khi các đặc điểm của giao dịch gian lận thay đổi, hiệu suất của mô hình có xu hướng suy giảm (model degradation), đòi hỏi một cơ chế tự thích nghi liên tục.
+**Sự khan hiếm về đặc trưng hữu dụng (Feature Scarcity).** Tập dữ liệu gốc của PaySim có số lượng cột rất hạn chế. Đặc biệt, các cột quan trọng nhất như `oldbalanceOrg`, `newbalanceOrig`, `oldbalanceDest`, và `newbalanceDest` thường chứa đựng đáp án trực tiếp của giao dịch, chẳng hạn như, giao dịch gian lận thường rút cạn tài khoản về 0. Việc loại bỏ hoặc hạn chế sử dụng các cột này để tránh hiện tượng Data Leakage (rò rỉ dữ liệu) khiến số lượng biến còn lại trở nên quá ít, gây khó khăn cho việc xây dựng một mô hình có độ bao quát cao.
 
-**Tác động của False Positive lên người dùng.** Việc dự đoán sai một giao dịch hợp lệ thành gian lận gây ra những phiền hà trực tiếp cho người dùng, chẳng hạn, một giao dịch chính thống của khách hàng bị đánh giá nhầm thành gian lận dẫn đến khóa thẻ đột ngột hoặc giao dịch bị từ chối. Trong lĩnh vực ngân hàng, việc giảm thiểu tỷ lệ False Positive là một thách thức lớn vì nó đòi hỏi sự cân bằng giữa tính bảo mật nghiêm ngặt và trải nghiệm khách hàng mượt mà. 
+**Thiếu hụt thông tin định danh và bối cảnh (Contextual Data Gap).** Bộ dữ liệu thiếu các thông tin quan trọng như: vị trí địa lý (IP/GPS), thiết bị thực hiện (Device ID), lịch sử đăng nhập, hoặc tần suất giao dịch trong quá khứ của người dùng. Thiếu các thông tin bối cảnh này, việc chỉ dựa vào số tiền và loại giao dịch khiến việc phân biệt giữa một giao dịch lớn hợp lệ và một giao dịch gian lận trở nên cực kỳ mong manh.
 
-## 7.2. Đề xuất hướng phát triển
+**Sự phụ thuộc vào kiến thức nghiệp vụ (Domain Expertise).** Kỹ thuật đặc trưng trong dự án này chủ yếu dựa trên các quan sát thống kê. Tuy nhiên, để phát hiện các hình thức rửa tiền hoặc lừa đảo qua mạng xã hội phức tạp, hệ thống cần sự kết hợp sâu hơn giữa dữ liệu và kiến thức nghiệp vụ từ các chuyên gia tài chính/pháp lý.
 
-Để nâng cao năng lực của hệ thống, các hướng phát triển sau đây sẽ được xem xét:
+## 7.2. Hướng phát triển
 
-**Sử dụng Deep Learning.** Thay vì chỉ phân tích các giao dịch đơn lẻ, việc sử dụng mạng nơ-ron truy hồi như Long Short-Term Memory (LSTM) cho phép mô hình học được các chuỗi hành vi của người dùng theo thời gian. Điều này cực kỳ hữu ích trong việc phát hiện các mẫu gian lận diễn ra qua nhiều bước liên tiếp.
+Để nâng cao giá trị của quy trình xử lý dữ liệu, các hướng cải thiện sau sẽ được ưu tiên:
 
-**Tích hợp hệ thống streaming thời gian thực.** Tích hợp mô hình vào các đường ống dữ liệu trực tuyến , như Apache Kafka hoặc Spark Streaming, để cho phép chấm điểm rủi ro và ngăn chặn gian lận ngay tại thời điểm giao dịch phát sinh. Hệ thống này sẽ đảm bảo tính phản ứng tức thời, giảm thiểu thiệt hại tài chính trước khi giao dịch hoàn tất.
+**Automated Feature Engineering (Kỹ thuật đặc trưng tự động).** Áp dụng các công cụ như Featuretools hoặc các thuật toán Deep Learning (Autoencoders) để tự động trích xuất các đặc trưng tiềm ẩn (latent features) mà mắt người hoặc phân tích thống kê thông thường có thể bỏ sót.
+
+**Phân tích thực thể và mối quan hệ (Graph Features).** Thay vì coi mỗi giao dịch là độc lập, hướng phát triển tương lai sẽ xây dựng các đặc trưng dựa trên Đồ thị (Graph). Việc tính toán các chỉ số như bậc của nút (node degree) hay tính trung tâm (centrality) giữa các tài khoản sẽ giúp nhận diện các mạng lưới tội phạm có tổ chức.
+
+**Tối ưu hóa lựa chọn đặc trưng (Feature Selection Optimization).** Sử dụng các kỹ thuật tiên tiến như SHAP (SHapley Additive exPlanations) hoặc Boruta để loại bỏ các đặc trưng gây nhiễu, chỉ giữ lại những biến thực sự có giá trị đóng góp cho mô hình, từ đó giúp mô hình tinh gọn và chạy nhanh hơn.
+
+**Xử lý Data/Concept Drift**. Xây dựng quy trình giám sát sự thay đổi của phân phối dữ liệu theo thời gian. Khi các đặc trưng không còn giữ được giá trị phân loại như ban đầu, hệ thống sẽ tự động kích hoạt quy trình tái cấu trúc đặc trưng (reengineering) để thích nghi với các thủ đoạn gian lận mới.
+
+# 9. Kết luận
+
+Dự án đã chứng minh rằng trong bài toán phát hiện gian lận, chất lượng đặc trưng quan trọng cũng quan trọng không kém gì các thuật toán. Thông qua quá trình EDA, chúng tôi nhận thấy các giao dịch gian lận thường tập trung vào hai loại hình là `TRANSFER` và `CASH_OUT`. Việc tập trung khai thác mối quan hệ giữa các biến số ít ỏi còn lại đã giúp tối ưu hóa khả năng phân loại của mô hình.
+
+Kết quả so sánh cho thấy mô hình được huấn luyện trên bộ dữ liệu đã qua xử lý và trích xuất đặc trưng (Feature Engineering) có độ chính xác (F1-Score) vượt trội so với việc sử dụng dữ liệu thô. Việc tạo ra các biến như `isErrorOrg` và `isErrorDest` đã giúp mô hình bắt được các dấu hiệu bất thường mà các biến đơn lẻ không thể hiện được.
+
+Hướng tiếp cận tập trung vào dữ liệu giúp doanh nghiệp hiểu rõ hơn về hành vi khách hàng thay vì coi mô hình học máy như một hộp đen. Điều này cho phép các ngân hàng xây dựng hệ thống rule-based kết hợp với AI một cách minh bạch, từ đó giảm thiểu rủi ro tài chính và bảo vệ uy tín thương hiệu.
 
 # Tài liệu tham khảo
 
