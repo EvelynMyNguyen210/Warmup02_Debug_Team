@@ -75,6 +75,347 @@ However, it is important to note that PaySim is a synthetic dataset. As such, fr
 
 These limitations should be carefully considered when evaluating the model’s applicability to real-world financial environments.
 
+# 3. Exploratory Data Analysis (EDA)
+
+EDA - Exploratory Data Analysis is the process of examining, visualizing, and summarizing the main characteristics of a raw dataset. EDA helps to better understand the structure, detect errors, outliers, and relationships between variables before building a model.
+
+By conducting a basic data inspection, we observe that the dataset has the following characteristics:
+
+- The total size of the dataset is (6362620, 11)
+- The data does not contain any NaN values
+- There are two columns containing object-type data: type, nameOrig, nameDest
+
+```python
+df = pd.read_csv(file_path)
+df.shape
+df.isnull().sum()
+df.info()
+```
+```python
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 6362620 entries, 0 to 6362619
+Data columns (total 11 columns):
+ #   Column          Dtype  
+---  ------          -----  
+ 0   step            int64  
+ 1   type            object 
+ 2   amount          float64
+ 3   nameOrig        object 
+ 4   oldbalanceOrg   float64
+ 5   newbalanceOrig  float64
+ 6   nameDest        object 
+ 7   oldbalanceDest  float64
+ 8   newbalanceDest  float64
+ 9   isFraud         int64  
+ 10  isFlaggedFraud  int64  
+dtypes: float64(5), int64(3), object(3)
+```
+
+With the size (6362620, 11), we can see that this dataset is not too large but still contains a significant amount of information and features. Therefore, we need to analyze each feature to understand the relationships between them.
+
+## 3.1. Transaction type analysis
+
+By examining transactions labeled as Fraud and Valid, we check which transaction types are considered valid and which are considered fraudulent.
+
+```python
+# Split data into Fraud and Valid
+data_new = df.copy()
+
+fraud = data_new[data_new["isFraud"] == 1]
+valid = data_new[data_new["isFraud"] == 0]
+
+print("Fraud transactions by type: \n",fraud.type.value_counts())
+print("\n Valid transactions by type: \n",valid.type.value_counts())
+```
+
+We obtain the following results:
+```python
+Fraud transactions by type: 
+ type
+CASH_OUT    4116
+TRANSFER    4097
+Name: count, dtype: int64
+
+ Valid transactions by type: 
+ type
+CASH_OUT    2233384
+PAYMENT     2151495
+CASH_IN     1399284
+TRANSFER     528812
+DEBIT         41432
+Name: count, dtype: int64
+```
+
+From the analysis, we observe that the dataset contains transaction types: CASH_IN, CASH_OUT, PAYMENT, TRANSFER, and DEBIT. Among these, the two transaction types identified as fraud are CASH_OUT and TRANSFER. Therefore, we will focus on analyzing fraud and valid data for these two transaction types.
+
+```python
+# Focus on TRANSFER and CASH_OUT
+valid = valid[(valid["type"] == "CASH_OUT")| (valid["type"] == "TRANSFER")]
+data_new = data_new[(data_new["type"] == "CASH_OUT") | (data_new["type"] == "TRANSFER")]
+```
+
+## 3.2. Balance analysis
+
+One of the important indicators reflecting whether a transaction is legitimate or suspicious is the account balance after the transaction. For example, a normal transaction should have a balance equal to the previous balance minus the transaction amount. We calculate the transaction error for the sender account (denoted as Orig) and the receiver account (denoted as Dest):
+
+```python
+data_new['errorOrig'] = data_new['oldbalanceOrg'] - data_new['amount'] - data_new['newbalanceOrig']
+data_new['errorDest'] = data_new['oldbalanceDest'] + data_new['amount'] - data_new['newbalanceDest']
+
+# Analyze these values to see the distribution of non 0 and 0 cases
+# Define threshold for "zero"
+threshold = 1e-6
+
+# Origin
+data_new['isErrorOrig'] = (~np.isclose(data_new['errorOrig'], 0, atol=threshold)).astype(int)
+
+# Destination
+data_new['isErrorDest'] = (~np.isclose(data_new['errorDest'], 0, atol=threshold)).astype(int)
+
+print("Origin Error Counts:")
+print(data_new['isErrorOrig'].value_counts(normalize=True) * 100)
+
+print("\nDestination Error Counts:")
+print(data_new['isErrorDest'].value_counts(normalize=True) * 100)
+```
+The results are:
+```python
+Origin Error Counts:
+isErrorOrig
+1    90.518079
+0     9.481921
+Name: proportion, dtype: float64
+
+Destination Error Counts:
+isErrorDest
+0    71.075859
+1    28.924141
+Name: proportion, dtype: float64
+```
+From the analysis, we observe that errors occur frequently in Origin; both fraud and non-fraud transactions show balance inconsistencies. Therefore, most cases appear suspicious, and using Origin may not accurately reflect the relationship between fraud and non-fraud transactions.
+
+Meanwhile, for Destination, only 29% of cases show balance errors. This suggests that using Destination may make it easier to identify suspicious transactions.
+
+Next, we examine cases with and without errors against fraud and non-fraud labels:
+
+```python
+pd.crosstab(data_new['isErrorDest'], data_new['isFraud'], normalize='columns') * 100
+pd.crosstab(data_new['isErrorOrig'], data_new['isFraud'], normalize='columns') * 100
+```
+
+The results are:
+
+| isErrorDest | isFraud=0 | isFraud=1 |
+| :---------: | :-------: | :--------: |
+| 0 | 71.166528 | 40.582004 |
+| 1 | 28.833472 | 59.417996 |
+
+| isErrorOrig | isFraud=0 | isFraud=1 |
+| :---------: | :-------: | :--------: |
+| 0 | 9.214408 | 99.452088 |
+| 1 | 90.785592 | 0.547912 |
+
+**Analysis of isErrorDest:**
+- When error = 1:
+  * Fraud: 59% -> Fraud transactions have a higher error rate
+  * Non-fraud: 29% 
+
+- When error = 0:
+  * Fraud: 40%
+  * Non-fraud: 71% -> Normal transactions have fewer errors
+
+*This analysis shows that fraud transactions are often associated with balance inconsistencies at the Destination. The error rate in fraud cases is roughly twice that of normal transactions.*
+
+-> This indicates that isErrorDest is a strong feature for distinguishing between normal and abnormal transactions. isErrorDest=1 is associated with fraud transactions, while isErrorDest=0 corresponds to non-fraud.
+
+**Analysis of isErrorDest:**
+- With error = 1:
+  * Fraud: 99% -> Fraud transactions almost never have errors
+  * Non-fraud: 0.5%
+
+- With error = 0:
+  * Fraud: 90% -> Normal transactions have higher error occurrence
+  * Non-fraud: 9% 
+
+*This suggests that in fraud transactions, balance errors are nearly absent, meaning balances are carefully adjusted to avoid detection (when relying on post-transaction balance checks). In contrast, non-fraud transactions tend to have higher error rates*
+
+-> This indicates that isErrorOrig is also a potential feature for distinguishing transactions. isErrorOrig=1 corresponds to non-fraud, while isErrorOrig=0 corresponds to fraud.
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Debug_Team/blob/main/Collection_Blog3/Fraud_Rate_by_Destination_Error.bmp style="margin: 0 auto; display: block;"><br/>
+  <em>Figure 3.1. Probability of fraud transactions given Destination error</em>
+</p>
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Debug_Team/blob/main/Collection_Blog3/Fraud_Rate_by_Origin_Error.bmp style="margin: 0 auto; display: block;"><br/>
+  <em>Figure 3.2. Probability of fraud transactions given Origin error</em>
+</p>
+
+**Conclusion:** isErrorOrig and isErrorDest will be added to the dataset as features.
+
+## 3.3. Analysis of isFlaggedFraud
+
+isFlaggedFraud describes transactions exceeding 200,000 units that are flagged as fraud. This is a rule-based feature (a simulation within this dataset). We examine how many transactions are flagged under this rule:
+
+```python
+# Check how many observations are flagged as Fraud
+flagged = data_new[data_new["isFlaggedFraud"] == 1]
+flagged_correctly = sum(flagged["isFraud"] == 1)
+flagged_wrongly = len(flagged) - flagged_correctly
+total = flagged_correctly + flagged_wrongly
+
+print(flagged_correctly," observations were flagged correctly and ", flagged_wrongly, \
+      " observations were flagged wrongly for a total of ", total, " flagged observations.")
+
+# Check how many observations where the transaction is fraudulent, the transaction is a transfer and the amount is greater than 200, 000 are in the dataset
+should_be_flagged = fraud[(fraud["amount"] > 200000) & (fraud["type"] == "TRANSFER")]
+print("Number of observations that should be flagged: ", len(should_be_flagged))
+```
+
+The results are:
+```python
+16 observations were flagged correctly and 0 observations were flagged wrongly for a total of  16  flagged observations.
+Number of observations that should be flagged: 2740
+```
+
+From the analysis, only 16 cases were correctly flagged, while there are actually 2740 transactions exceeding 200,000 units that were not flagged by the system.
+
+**Conclusion:** isFlaggedFraud does not accurately reflect transaction characteristics. Therefore, it is not an important feature and will be dropped.
+
+## 3.4. Analysis of nameOrig and nameDest
+
+nameOrig and nameDest represent the sender and receiver account names. From the analysis, these columns do not provide meaningful information for the dataset, so they will be removed.
+
+## 3.5. Analysis of amount and step
+
+For amount, we examine its distribution for fraud and non-fraud cases:
+
+```python
+sns.boxplot(x='isFraud', y='amount', data=data_new)
+plt.yscale('log')
+plt.title('Amount vs Fraud')
+plt.show()
+```
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Debug_Team/blob/main/Collection_Blog3/Amount_vs_fraud.bmp style="margin: 0 auto; display: block;"><br/>
+  <em>Figure 3.3. Distribution of amount for fraud and non-fraud</em>
+</p>
+
+From the plot, transaction amounts range from 10<sup>5</sup> to 10<sup>7</sup>. Fraud transactions tend to have higher amounts than non-fraud, but there is still overlap between the two groups. Therefore, there is no clear separation between fraud and non-fraud based solely on amount.
+
+Next, analyzing transactions over time, we observe that fraud occurs relatively consistently, with slight spikes around step ranges 0–100 and around 400.
+
+For valid transactions, most occur between steps 0–60 and 100–400.
+
+```python
+bins = 50
+
+valid.hist(column="step",color="green",bins=bins)
+plt.xlabel("1 hour time step")
+plt.ylabel("# of transactions")
+plt.title("# of valid transactions over time")
+
+fraud.hist(column ="step",color="red",bins=bins)
+plt.xlabel("1 hour time step")
+plt.ylabel("# of transactions")
+plt.title("# of fraud transactions over time")
+
+plt.tight_layout()
+plt.show()
+```
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Debug_Team/blob/main/Collection_Blog3/%23_of_valid_transactions_over_time.bmp style="margin: 0 auto; display: block;"><br/>
+  <em>Figure 3.4. Distribution of valid transactions over time</em>
+</p>
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Debug_Team/blob/main/Collection_Blog3/%23_of_fraud_transactions_over_time.bmp style="margin: 0 auto; display: block;"><br/>
+  <em>Figure 3.5. Distribution of fraud transactions over time</em>
+</p>
+
+To better analyze fraud timing, we convert time into hours and examine patterns within a 24-hour cycle:
+
+```python
+data_new['hour'] = data_new['step'] % 24
+sns.barplot(x='hour', y='isFraud', data=data_new)
+plt.title('Fraud Rate by Hour')
+plt.show()
+```
+
+<p align="center">
+  <img src=https://github.com/EvelynMyNguyen210/Warmup02_Debug_Team/blob/main/Collection_Blog3/Fraud_rate_by_Hour.bmp style="margin: 0 auto; display: block;"><br/>
+  <em>Figure 3.6. Distribution of fraud transactions by hour (24h)</em>
+</p>
+
+The plot shows that fraud transactions mainly occur between 2 AM and 8 AM. Therefore, this is an effective feature for distinguishing fraud from valid transactions.
+
+From the analysis, amount remains an important feature since fraud transactions tend to involve larger amounts. While step alone does not provide clear insights, converting it into a 24-hour feature reveals meaningful patterns. Therefore, we will add the hour column and drop the step column.
+
+|         |     type |     amount | oldbalanceOrg | newbalanceOrig | oldbalanceDest | newbalanceDest | isFraud |  errorOrig |     errorDest | isErrorOrig | isErrorDest | hour |
+|---------|---------:|-----------:|--------------:|---------------:|---------------:|---------------:|--------:|-----------:|--------------:|------------:|------------:|-----:|
+|    2    | TRANSFER |     181.00 |        181.00 |            0.0 |           0.00 |           0.00 |       1 |       0.00 |  1.810000e+02 |           0 |           1 |    1 |
+|    3    | CASH_OUT |     181.00 |        181.00 |            0.0 |       21182.00 |           0.00 |       1 |       0.00 |  2.136300e+04 |           0 |           1 |    1 |
+|    15   | CASH_OUT |  229133.94 |      15325.00 |            0.0 |        5083.00 |       51513.44 |       0 | -213808.94 |  1.827035e+05 |           1 |           1 |    1 |
+|    19   | TRANSFER |  215310.30 |        705.00 |            0.0 |       22425.00 |           0.00 |       0 | -214605.30 |  2.377353e+05 |           1 |           1 |    1 |
+|    24   | TRANSFER |  311685.89 |      10835.00 |            0.0 |        6267.00 |     2719172.89 |       0 | -300850.89 | -2.401220e+06 |           1 |           1 |    1 |
+|   ...   |      ... |        ... |           ... |            ... |            ... |            ... |     ... |        ... |           ... |         ... |         ... |  ... |
+| 6362615 | CASH_OUT |  339682.13 |     339682.13 |            0.0 |           0.00 |      339682.13 |       1 |       0.00 |  0.000000e+00 |           0 |           0 |   23 |
+| 6362616 | TRANSFER | 6311409.28 |    6311409.28 |            0.0 |           0.00 |           0.00 |       1 |       0.00 |  6.311409e+06 |           0 |           1 |   23 |
+| 6362617 | CASH_OUT | 6311409.28 |    6311409.28 |            0.0 |       68488.84 |     6379898.11 |       1 |       0.00 |  1.000000e-02 |           0 |           1 |   23 |
+| 6362618 | TRANSFER |  850002.52 |     850002.52 |            0.0 |           0.00 |           0.00 |       1 |       0.00 |  8.500025e+05 |           0 |           1 |   23 |
+| 6362619 | CASH_OUT |  850002.52 |     850002.52 |            0.0 |     6510099.11 |     7360101.63 |       1 |       0.00 |  9.313226e-10 |           0 |           0 |   23 |
+
+<p align="center">
+  <em>Table 3.1 Processed dataset</em>
+</p>
+
+# 4. Data Preprocessing
+## 4.1. Data Encoding
+
+Before feeding data into the model, feature values must be converted into numerical form. In the current dataset, the type column is the only column containing string values (CASH_OUT, TRANSFER). Here, we use one-hot encoding to convert it into numerical data.
+
+```python
+# Seperate feature (X) and target (y)
+X = data_new.drop(columns=['isFraud'])
+y = data_new['isFraud']
+
+# Apply one hot encoding to type feature
+X = pd.get_dummies(X, columns=['type'], drop_first=True)
+```
+
+## 4.2. Train-test split
+
+Before training, we split the dataset into two parts: train and test. This ensures the model can generalize to new data and prevents overfitting. It ensures the model learns patterns instead of memorizing data.
+
+We split 80% for training and 20% for testing. We also set stratify=y to maintain class distribution, which is crucial because the dataset is highly imbalanced (fraud rate ~0.1%).
+
+```python
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,       # 80% train, 20% test
+    random_state=42,
+    stratify=y           # VERY IMPORTANT for imbalance
+)
+```
+
+## 4.3. Handling imbalance
+
+Since the dataset is highly imbalanced, the model may fail to detect fraud if not handled properly. Therefore, we apply oversampling.
+
+SMOTE (Synthetic Minority Over-sampling Technique) is a machine learning technique used to handle imbalanced datasets by generating synthetic samples for the minority class. Instead of duplicating data, SMOTE interpolates between nearby data points, helping the model learn better and reducing overfitting.
+
+We apply SMOTE to the training set:
+
+```python
+from imblearn.over_sampling import SMOTE
+
+smote = SMOTE(random_state=42)
+X_train_res, y_train_res = smote.fit_resample(X_train, y_train)
+```
+
 # 7. Limitations and Future Development Directions
 
 Although the focus on data processing and feature building has significantly improved model performance, the project still faces certain technical hurdles that need to be optimized in the future.
