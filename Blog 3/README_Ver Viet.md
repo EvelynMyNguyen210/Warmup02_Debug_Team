@@ -386,19 +386,23 @@ X = pd.get_dummies(X, columns=['type'], drop_first=True)
 
 ## 4.2. Train-test split
 
-Trước khi tiến hành training, ta chia dataset thành 2 bộ: train và test. Bước này đảm bảo khả năng khái quát hóa của mô hình trên dữ liệu mới, đồng thời ngăn chặn hiện tượng quá khớp (overfitting). Điều này đảm bảo mô hình học được bản chất quy luật, thay vì chỉ ghi nhớ dữ liệu.
-
-Ta sẽ chia 80% dữ liệu cho tập train và 20% còn lại cho tập test. Ta cũng thiết lập stratify=y để phân phối đều các giá trị của y trong cả 2 tập. Điều này là cần thiết vì bộ dữ liệu hiện tại mang đặc tính imbalance (tỉ lệ fraud 0.1%), khi đó các giá trị y tồn tại trong tập test có thể không chưa trường hợp fraud nào.
+Sau khi xử lý xong dữ liệu, ta tiến hành chia tập dữ liệu. Để đảm bảo tính khách quan và có thể theo dõi hiện tượng overfitting trong quá trình huấn luyện, tập dữ liệu được chia làm 3 phần: Train (70%), Validation (10%), và Test (20%). Việc dùng stratify=y là bắt buộc để giữ nguyên tỷ lệ mất cân bằng của nhãn Fraud ở cả 3 tập dữ liệu.
 
 ```python
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y,
-    test_size=0.2,       # 80% train, 20% test
-    random_state=42,
-    stratify=y           # VERY IMPORTANT for imbalance
+# Split Test (20%)
+X_temp, X_test, y_temp, y_test = train_test_split(
+    X, y, test_size=0.20, random_state=42, stratify=y
 )
+
+# Split Train (70%) & Val (10%)
+X_train, X_val, y_train, y_val = train_test_split(
+    X_temp, y_temp, test_size=0.125, random_state=42, stratify=y_temp
+)
+
+print(f"Total: {len(X)}")
+print(f"Train: {len(X_train)} | Val: {len(X_val)} | Test: {len(X_test)}")
 ```
 
 ## 4.3. Xử lí imbalance
@@ -415,8 +419,6 @@ from imblearn.over_sampling import SMOTE
 smote = SMOTE(random_state=42)
 X_train_res, y_train_res = smote.fit_resample(X_train, y_train)
 ```
-
-
 
 # 5. Model selection
 
@@ -453,25 +455,6 @@ Bất cứ ai từng cày cuốc trong các cuộc thi Data Science trên Kaggle
 ```
 
 # 6. Model Training & Evaluation
-
-Sau khi xử lý xong dữ liệu, nhóm mình tiến hành chia tập dữ liệu. Để đảm bảo tính khách quan và có thể theo dõi hiện tượng overfitting trong quá trình huấn luyện, tập dữ liệu được chia làm 3 phần: Train (70%), Validation (10%), và Test (20%). Việc dùng stratify=y là bắt buộc để giữ nguyên tỷ lệ mất cân bằng của nhãn Fraud ở cả 3 tập dữ liệu.
-
-```python
-from sklearn.model_selection import train_test_split
-
-# Split Test (20%)
-X_temp, X_test, y_temp, y_test = train_test_split(
-    X, y, test_size=0.20, random_state=42, stratify=y
-)
-
-# Split Train (70%) & Val (10%)
-X_train, X_val, y_train, y_val = train_test_split(
-    X_temp, y_temp, test_size=0.125, random_state=42, stratify=y_temp
-)
-
-print(f"Total: {len(X)}")
-print(f"Train: {len(X_train)} | Val: {len(X_val)} | Test: {len(X_test)}")
-```
 
 ## 6.1. Random Forest 
 
