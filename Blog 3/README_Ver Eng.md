@@ -672,7 +672,7 @@ To enhance the value of the data processing workflow, the following areas of imp
 
 **Data/Concept Drift Processing.** Develop a process to monitor changes in data distribution over time. When features no longer retain their original categorical value, the system will automatically trigger a feature reengineering process to adapt to new fraud schemes.
 
-# 9. Conclusion
+# 8. Conclusion
 
 The project demonstrated that in fraud detection, the features’ quality is just as important as the algorithms themselves. Through the EDA process, we found that fraudulent transactions typically fall into two categories: `TRANSFER` and `CASH_OUT`. And focusing on exploiting the relationships between the few remaining variables helped optimize the model's classification capabilities.
 
