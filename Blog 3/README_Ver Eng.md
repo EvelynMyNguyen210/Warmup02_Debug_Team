@@ -8,7 +8,7 @@ In the problem of fraud transaction detection, the biggest challenge lies not on
 
 Instead of focusing on fine-tuning model parameters, this project focuses on optimizing the quality of input data. Specific objectives include:
 
-**EDA (Exploratory Data Analytics.** Explore hidden relationships between variables to uncover traces of fraudulent behavior on the dataset.
+**EDA (Exploratory Data Analytics).** Explore hidden relationships between variables to uncover traces of fraudulent behavior on the dataset.
 
 **Feature Engineering.** Constructing new variables from raw data to enhance the algorithm's classification capabilities.
 
