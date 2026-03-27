@@ -228,7 +228,7 @@ The results are:
 
 -> This indicates that isErrorDest is a strong feature for distinguishing between normal and abnormal transactions. isErrorDest=1 is associated with fraud transactions, while isErrorDest=0 corresponds to non-fraud.
 
-**Analysis of isErrorDest:**
+**Analysis of isErrorOrig:**
 - With error = 1:
    * Fraud: 90% -> Normal transactions have higher error occurrence
    * Non-fraud: 9% 
