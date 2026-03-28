@@ -34,7 +34,7 @@ The following examples are extracted from the PaySim dataset to demonstrate the 
 | 1    | PAYMENT  | 11668.14 | C2048537720  | 41554.0        | 29885.86       | M1230701703  | 0.0            | 0.0            | 0      | 0              |
 
 **Quick observations:**
-- Fraudulent transactions (isFraud = 1) often occur in categories such as TRANSFER or CASH_OUT.
+- Fraudulent transactions (`isFraud = 1`) often occur in categories such as `TRANSFER` or `CASH_OUT`.
 - Some transactions result in the sender’s balance dropping to zero immediately — a potentially suspicious pattern that models should learn to detect.
 
 Overall, the dataset does more than store isolated transactions; it captures money flow and balance transitions, which is highly valuable for detecting anomalous behavior.
@@ -46,14 +46,14 @@ The amount variable represents the transaction value and is one of the most crit
 
 The step variable denotes time in hours, spanning roughly 30 days. This enables time-series analysis, such as identifying accounts that perform multiple transactions within a short period — a common fraud pattern.
 
-Balance-related features, including oldbalanceOrg, newbalanceOrig, oldbalanceDest, and newbalanceDest, are particularly important for modeling money flow. Instead of looking at transactions in isolation, these variables capture the financial state before and after each transaction. For example, an account being drained to zero or a recipient account receiving funds without a clear prior balance can both signal suspicious activity.
+Balance-related features, including `oldbalanceOrg`, `newbalanceOrig`, `oldbalanceDest`, and `newbalanceDest`, are particularly important for modeling money flow. Instead of looking at transactions in isolation, these variables capture the financial state before and after each transaction. For example, an account being drained to zero or a recipient account receiving funds without a clear prior balance can both signal suspicious activity.
 
-Additionally, the type feature categorizes transactions into groups such as PAYMENT, TRANSFER, and CASH_OUT. This is useful because different transaction types carry different risk levels. In practice, TRANSFER and CASH_OUT are more frequently associated with fraudulent behavior than standard payment transactions.
+Additionally, the type feature categorizes transactions into groups such as `PAYMENT`, `TRANSFER`, and `CASH_OUT`. This is useful because different transaction types carry different risk levels. In practice, `TRANSFER` and `CASH_OUT` are more frequently associated with fraudulent behavior than standard payment transactions.
 
 Overall, these features provide not only quantitative data but also behavioral insights, forming a strong foundation for advanced feature engineering in later stages.
 
 ## 2.3. Target Variable
-In this problem, isFraud serves as the target variable. It defines a binary classification task, where each transaction is labeled as either fraudulent (1) or legitimate (0).
+In this problem, `isFraud` serves as the target variable. It defines a binary classification task, where each transaction is labeled as either fraudulent (1) or legitimate (0).
 
 While this may seem straightforward, predicting fraud is inherently challenging. A robust model must not only detect as many fraudulent transactions as possible but also minimize false alarms on legitimate ones. This is especially critical in financial systems, where excessive false positives can frustrate users and erode trust.
 
@@ -146,7 +146,7 @@ DEBIT         41432
 Name: count, dtype: int64
 ```
 
-From the analysis, we observe that the dataset contains transaction types: CASH_IN, CASH_OUT, PAYMENT, TRANSFER, and DEBIT. Among these, the two transaction types identified as fraud are CASH_OUT and TRANSFER. Therefore, we will focus on analyzing fraud and valid data for these two transaction types.
+From the analysis, we observe that the dataset contains transaction types: `CASH_IN`, `CASH_OUT`, `PAYMENT`, `TRANSFER`, and `DEBIT`. Among these, the two transaction types identified as fraud are `CASH_OUT` and `TRANSFER`. Therefore, we will focus on analyzing fraud and valid data for these two transaction types.
 
 ```python
 # Focus on TRANSFER and CASH_OUT
@@ -239,7 +239,7 @@ The results are:
 
 *This suggests that in fraud transactions, balance errors are nearly absent, meaning balances are carefully adjusted to avoid detection (when relying on post-transaction balance checks). In contrast, non-fraud transactions tend to have higher error rates*
 
--> This indicates that isErrorOrig is also a potential feature for distinguishing transactions. isErrorOrig=1 corresponds to non-fraud, while isErrorOrig=0 corresponds to fraud.
+-> This indicates that isErrorOrig is also a potential feature for distinguishing transactions. `isErrorOrig = 1` corresponds to non-fraud, while `isErrorOrig = 0` corresponds to fraud.
 
 <p align="center">
   <img src=https://github.com/EvelynMyNguyen210/Warmup02_Debug_Team/blob/main/Collection_Blog3/Fraud_Rate_by_Destination_Error.bmp style="margin: 0 auto; display: block;"><br/>
@@ -251,11 +251,11 @@ The results are:
   <em>Figure 3.2. Probability of fraud transactions given Origin error</em>
 </p>
 
-**Conclusion:** isErrorOrig and isErrorDest will be added to the dataset as features.
+**Conclusion:** `isErrorOrig` and `isErrorDest` will be added to the dataset as features.
 
 ## 3.3. Analysis of isFlaggedFraud
 
-isFlaggedFraud describes transactions exceeding 200,000 units that are flagged as fraud. This is a rule-based feature (a simulation within this dataset). We examine how many transactions are flagged under this rule:
+`isFlaggedFraud` describes transactions exceeding 200,000 units that are flagged as fraud. This is a rule-based feature (a simulation within this dataset). We examine how many transactions are flagged under this rule:
 
 ```python
 # Check how many observations are flagged as Fraud
@@ -280,7 +280,7 @@ Number of observations that should be flagged: 2740
 
 From the analysis, only 16 cases were correctly flagged, while there are actually 2740 transactions exceeding 200,000 units that were not flagged by the system.
 
-**Conclusion:** isFlaggedFraud does not accurately reflect transaction characteristics. Therefore, it is not an important feature and will be dropped.
+**Conclusion:** `isFlaggedFraud` does not accurately reflect transaction characteristics. Therefore, it is not an important feature and will be dropped.
 
 ## 3.4. Analysis of nameOrig and nameDest
 
@@ -373,7 +373,7 @@ From the analysis, amount remains an important feature since fraud transactions 
 # 4. Data Preprocessing
 ## 4.1. Data Encoding
 
-Before feeding data into the model, feature values must be converted into numerical form. In the current dataset, the type column is the only column containing string values (CASH_OUT, TRANSFER). Here, we use one-hot encoding to convert it into numerical data.
+Before feeding data into the model, feature values must be converted into numerical form. In the current dataset, the type column is the only column containing string values (`CASH_OUT`, `TRANSFER`). Here, we use one-hot encoding to convert it into numerical data.
 
 ```python
 # Seperate feature (X) and target (y)
@@ -388,7 +388,7 @@ X = pd.get_dummies(X, columns=['type'], drop_first=True)
 
 Before training, we split the dataset into two parts: train and test. This ensures the model can generalize to new data and prevents overfitting. It ensures the model learns patterns instead of memorizing data.
 
-We split 80% for training and 20% for testing. We also set stratify=y to maintain class distribution, which is crucial because the dataset is highly imbalanced (fraud rate ~0.1%).
+We split 80% for training and 20% for testing. We also set `stratify=y` to maintain class distribution, which is crucial because the dataset is highly imbalanced (fraud rate ~0.1%).
 
 ```python
 from sklearn.model_selection import train_test_split
@@ -676,7 +676,7 @@ To enhance the value of the data processing workflow, the following areas of imp
 
 The project demonstrated that in fraud detection, the features’ quality is just as important as the algorithms themselves. Through the EDA process, we found that fraudulent transactions typically fall into two categories: `TRANSFER` and `CASH_OUT`. And focusing on exploiting the relationships between the few remaining variables helped optimize the model's classification capabilities.
 
-The comparison results show that the model trained on the processed dataset and with feature extraction (Feature Engineering) has superior accuracy (F1-Score) compared to using raw data. The creation of variables such as `isErrorOrg` and `isErrorDest`, has helped the model capture anomalies that individual variables cannot reveal.
+The comparison results show that the model trained on the processed dataset and with feature extraction (Feature Engineering) has superior accuracy (F1-Score) compared to using raw data. The creation of variables such as `isErrorOrig` and `isErrorDest`, has helped the model capture anomalies that individual variables cannot reveal.
 
 A data-centric approach helps businesses better understand customer behavior instead of treating machine learning models as a black box. This allows banks to build rule-based systems combined with AI in a transparent manner, thereby minimizing financial risks and protecting brand reputation.
 
